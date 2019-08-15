@@ -95,7 +95,7 @@ $result = mysqli_query($conn, $query);
               <div class="card">
                 <div class="card-header card-header-success">
                   <h4 class="card-title">Destination List</h4>
-                  <p class="card-category">As of August 2019</p>
+                  <p class="card-category">As of <?php echo date('F') ?> <?php echo date('Y') ?> </p>
                 </div>
                 <div class="card-body table-responsive">
                   <table class="table table-hover">

@@ -80,6 +80,7 @@ $result = mysqli_query($conn, $query);
     </div>
     <div class="main-panel">
       <!-- Navbar -->
+
       <!-- End Navbar -->
       <div class="content">
         <div class="container-fluid">
@@ -87,8 +88,9 @@ $result = mysqli_query($conn, $query);
             <div class="col-lg-12 col-md-12">
               <div class="card">
                 <div class="card-header card-header-warning">
-                  <h4 class="card-title">Travel Groups</h4>
-                  <p class="card-category">As of August 2019</p>
+                  <h4 class="card-title"><button href="" class="btn btn-info btn-round" style="float: right;" data-toggle="modal" data-target="#loginModal">Create New Group</button>Travel Groups</h4>
+                  <p class="card-category">As of <?php echo date('F') ?> <?php echo date('Y') ?> </p>
+
                 </div>
                 <div class="card-body table-responsive">
                   <table class="table table-hover">
@@ -121,6 +123,36 @@ $result = mysqli_query($conn, $query);
                   </table>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="loginModal" tabindex="-1" role="">
+          <div class="modal-dialog modal-login" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 class="modal-title text-center">Create New Group </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form id="creategroup" action="creategroup.php" method="POST">
+                <div class="modal-body">                 
+                  <div class="form-row">
+                    <div class="col">
+                      <input type="text" hidden="" class="form-control" placeholder="Last name">
+                    </div>
+                    <div class="col-8">
+                      <input type="text" class="form-control" id="groupName" name="groupName" placeholder="Enter Group Name">
+                    </div>
+                    <div class="col">
+                      <input type="hidden" hidden=""  id="yearCreated" name="yearCreated" class="form-control" value="<?php echo date('Y') ?>" placeholder="Year Created">
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                  <button type="submit" id="creategroup" name="savegroup" class="btn btn-info btn-round">Create Group</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

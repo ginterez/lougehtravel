@@ -19,7 +19,7 @@ if(isset($_GET['id'])){
 include_once('connect.php');
 $id = $_GET['id'];
 
-$query = ("SELECT * FROM person WHERE user_id='$id'");
+$query = ("SELECT * FROM usergroups WHERE user_id='$id'");
 $result1 = mysqli_query($conn, $query);
 $row = mysqli_fetch_array($result1);
 $result2 = mysqli_query($conn, $query);
@@ -98,8 +98,8 @@ $result2 = mysqli_query($conn, $query);
                 <div class="card-body table-responsive">
                   <table class="table table-hover">
                     <thead class="text-warning">
-                      <th>User ID</th>
-                      <th>Full Name</th>
+                      <th>Group ID</th>
+                      <th>Group Name</th>
                       <th>City</th>
                       <th>Country</th>
                       <th>Year Travel</th>
@@ -116,12 +116,12 @@ $result2 = mysqli_query($conn, $query);
 
                       <tbody>
                         <tr>
-                          <td><?php echo $rows['user_id']; ?></td>
-                          <td><?php echo $rows['fullname']; ?></td>
+                          <td><?php echo $rows['group_id']; ?></td>
+                          <td><?php echo $rows['group_name']; ?></td>
                           <td><?php echo $rows['city']; ?></td>
                           <td><?php echo $rows['country']; ?></td>
                           <td><?php echo $rows['year_travel']; ?></td>
-                          <td><a href="/lougehtravel/usergroups.php?id=<?php echo $rows['user_id'];?>" class="btn btn-warning btn-round">View User</a></td>  
+                          <td><a href="/lougehtravel/groupdetail.php?id=<?php echo $rows['group_id'];?>&year=<?php echo $rows['year_travel'];?>" class="btn btn-warning btn-round">View Group Details</a></td> 
                         </tr>
                       </tbody>
                       <?php
