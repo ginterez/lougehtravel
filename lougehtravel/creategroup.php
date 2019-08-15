@@ -1,31 +1,20 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$db = "lougehtravel";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $db);
-
-if(isset($_POST['savegroup']))
+$conn = mysqli_connect("localhost", "root", "", "lougehtravel");
+if(!empty($_POST))
 {
-	$groupName = $_POST['groupName'];
-	$yearCreated = $_POST['yearCreated'];
+	$output = '';
+	$groupName = mysqli_real_escape_string($conn, $_POST['groupName']);
+	$yearCreated = mysqli_real_escape_string($conn, $_POST['yearCreated']);
 
-	$query = "INSERT INTO groups ('group_name', 'year_created') VALUES ('$groupName', '$yearCreated')";
-	$query_run = mysqli_query($conn, $query);
+	$query = "INSERT INTO groups(group_name, year_created) VALUES ('$groupName', '$yearCreated')";
 
-	if($query_run)
+	if(mysqli_query($conn, $query))
 	{
-		echo '<script> alert("Group Added"); </script>';
-		header('Location: index.php');
-	}
-	else
-	{
-		echo '<script> alert("Group is not added"); </script>';
+		$output .= '<label class="text-success">Group is added</lable>';
+		$select_query = "SELECT * FROM groups ORDER BY id DESC";
+		$result = mysqli_query($conn, $select_query);
 	}
 }
-
 
 ?>

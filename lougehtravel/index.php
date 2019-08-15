@@ -88,11 +88,11 @@ $result = mysqli_query($conn, $query);
             <div class="col-lg-12 col-md-12">
               <div class="card">
                 <div class="card-header card-header-warning">
-                  <h4 class="card-title"><button href="" class="btn btn-info btn-round" style="float: right;" data-toggle="modal" data-target="#loginModal">Create New Group</button>Travel Groups</h4>
+                  <h4 class="card-title"><button href="" class="btn btn-info btn-round" style="float: right;" data-toggle="modal" name="add" id="add" data-target="#addGroupModal">Create New Group</button>Travel Groups</h4>
                   <p class="card-category">As of <?php echo date('F') ?> <?php echo date('Y') ?> </p>
 
                 </div>
-                <div class="card-body table-responsive">
+                <div class="card-body table-responsive" id="group_table">
                   <table class="table table-hover">
                     <thead class="text-warning">
                       <th>Group ID</th>
@@ -126,7 +126,7 @@ $result = mysqli_query($conn, $query);
             </div>
           </div>
         </div>
-        <div class="modal fade" id="loginModal" tabindex="-1" role="">
+        <div class="modal fade" id="addGroupModal" tabindex="-1" role="">
           <div class="modal-dialog modal-login" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -135,22 +135,22 @@ $result = mysqli_query($conn, $query);
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form id="creategroup" action="creategroup.php" method="POST">
+              <form id="add_new_group" method="POST">
                 <div class="modal-body">                 
                   <div class="form-row">
                     <div class="col">
-                      <input type="text" hidden="" class="form-control" placeholder="Last name">
+                      <input hidden="" class="form-control" placeholder="">
                     </div>
                     <div class="col-8">
                       <input type="text" class="form-control" id="groupName" name="groupName" placeholder="Enter Group Name">
                     </div>
                     <div class="col">
-                      <input type="hidden" hidden=""  id="yearCreated" name="yearCreated" class="form-control" value="<?php echo date('Y') ?>" placeholder="Year Created">
+                      <input hidden="" id="yearCreated" name="yearCreated" class="form-control" value="<?php echo date('Y') ?>" placeholder="Year Created">
                     </div>
                   </div>
                 </div>
                 <div class="modal-footer justify-content-center">
-                  <button type="submit" id="creategroup" name="savegroup" class="btn btn-info btn-round">Create Group</button>
+                  <button type="submit" name="savegroup" class="btn btn-info btn-round">Create Group</button>
                 </div>
               </form>
             </div>
@@ -193,7 +193,6 @@ $result = mysqli_query($conn, $query);
   <!-- Library for adding dinamically elements -->
   <script src="assets/js/plugins/arrive.min.js"></script>
   <!--  Google Maps Plugin    -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
   <!-- Chartist JS -->
   <script src="assets/js/plugins/chartist.min.js"></script>
   <!--  Notifications Plugin    -->
@@ -202,6 +201,53 @@ $result = mysqli_query($conn, $query);
   <script src="assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
   <script src="assets/demo/demo.js"></script>
+
+  <script>
+    $(document).ready(function() {
+
+      $('#add_new_group').on('submit',function(event)
+        {
+
+          event.preventDefault();
+          if($('groupName').val() == "")
+          {
+            alert("Group name is required");
+          }
+          else
+          {
+            $.ajax({
+              url: "creategroup.php",
+              method: "POST",
+              data:$('#add_new_group').serialize(),
+              success:function(data)
+              {
+                $('#add_new_group')[0].reset();
+                $('#addGroupModal').modal('hide');
+                $('#group_table').html(data);
+
+              }
+            })
+          }
+
+          // var groupName = $("#groupName").val();
+          // var yearCreated = $("#yearCreated").val();
+
+          // $.ajax(
+          // {
+          //   url:"creategroup.php",
+          //   type: "post",
+          //   data: {groupName: groupName, yearCreated:yearCreated},
+          //   success: function(data){
+          //     alert("Group is added.");
+          //     $("#loginModal").modal('hide');
+          //     location.reload();
+          //   }
+          // });
+        });
+
+    });
+  </script>
+
   <script>
     $(document).ready(function() {
       $().ready(function() {
